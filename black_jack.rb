@@ -4,4 +4,6 @@ require_relative 'diler'
 require_relative 'card'
 require_relative 'interface'
 
-Interface.new.start
+$blackjack = Interface.new
+
+$blackjack.greetings

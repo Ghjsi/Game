@@ -4,10 +4,9 @@ class Gamer
 
   attr_accessor :hand_cards
 
-  attr_reader :points
+  attr_reader :points, :bank
 
-  def initialize #(name)
-    #@name = name
+  def initialize
     @bank = 100
     @hand_cards = []
     @points = 0
@@ -30,15 +29,20 @@ class Gamer
   end
 
   def points
-    @hand_cards.each do |card|  # K <>
+    @points = 0
+    @hand_cards.each do |card|
       symbols = card.split(" ")
       suit = symbols[0]
 
       case suit
-      when 'K' || 'Q' || 'J'
+      when 'K'
+        @points += 10
+      when 'Q'
+        @points += 10
+      when 'J'
         @points += 10
       when 'A'
-        @points += 1 if @points + 11 > 21
+        @points += 1 if @points + 11 >= 21
         @points += 11 if @points + 11 < 21
       else
         @points += suit.to_i
