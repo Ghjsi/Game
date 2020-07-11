@@ -1,5 +1,7 @@
 class Gamer
 
+  @@stake = 0 # на кону 0 долл
+
   attr_accessor :hand_cards
 
   def initialize #(name)
@@ -10,7 +12,8 @@ class Gamer
 
   def make_bet
     if @bank > 0
-      @bank -= 10 
+      @bank -= 10
+      @@stake +=10
     else
       puts 'Bank is empty'
     end
@@ -22,5 +25,5 @@ class Gamer
   def get_card(deck_name)
     @hand_cards << deck_name.give_card
   end
-  
+
 end
