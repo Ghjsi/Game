@@ -1,4 +1,5 @@
 class User < Gamer
+  
   def open_cards
   end
 

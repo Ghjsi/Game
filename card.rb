@@ -1,5 +1,6 @@
 class Card
   attr_reader :deck
+  
 
     def initialize
       @deck = []

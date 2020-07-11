@@ -22,4 +22,5 @@ class Gamer
   def get_card(deck_name)
     @hand_cards << deck_name.give_card
   end
+  
 end
