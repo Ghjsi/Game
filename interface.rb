@@ -14,8 +14,10 @@ class Interface
 
   def game
     loop do
+      print 'Сумма Ваших очков:'
+      puts "#{@user.points}"
       show_hand_cards
-      puts "#{@user_name}, введите"
+      puts "\n #{@user_name} - Ваш ход. Введите:"
       puts '1 - чтобы пропустить ход'
       puts '2 - добавить карту'
       puts '3 - открыть карты'
@@ -40,8 +42,9 @@ class Interface
   def show_hand_cards
     print 'Карты у вас в руке:'
     @user.hand_cards.each { |card| print "|#{card}|  "}
+    puts ' '
     print 'Карты в руке соперника:'
-    @diler.hand_cards.each { |card| print "|?card?|  "}
+    @diler.hand_cards.each { |card| print "|**|  "} #"|?card?|  "
  end
 
   def gamer_skip_move
