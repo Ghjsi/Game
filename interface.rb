@@ -1,5 +1,4 @@
 class Interface
-
   attr_reader :diler, :user, :card
 
   def greetings
@@ -9,7 +8,6 @@ class Interface
 
     @user = User.new
     @diler = Diler.new
-#distribute
     start
   end
 
@@ -19,18 +17,17 @@ class Interface
     @user.make_bet
     @diler.make_bet
     puts "Игроки сделали ставки по 10 долларов. В вашем банке #{@user.bank} долларов."
-    puts "На кону #{Gamer.class_eval("@@stake")}"
+    puts "На кону #{Gamer.class_variable_get('@@stake')}"
+
     game
   end
 
-
   def game
     loop do
-
       open_cards if full_hands?
 
       print 'Сумма Ваших очков:'
-      puts "#{@user.points}"
+      puts @user.points.to_s
       show_hand_cards
       puts "\n #{@user_name} - Ваш ход. Введите:"
       puts '1 - чтобы пропустить ход'
@@ -69,11 +66,11 @@ class Interface
 
   def show_hand_cards
     print 'Карты у вас в руке:'
-    @user.hand_cards.each { |card| print "|#{card}|  "}
+    @user.hand_cards.each { |card| print "|#{card}|  " }
     puts ' '
     print 'Карты в руке соперника:'
-    @diler.hand_cards.each { |card| print "|**|  "}
- end
+    @diler.hand_cards.each { |_card| print '|**|  ' }
+  end
 
   def gamer_skip_move
     @diler.move
@@ -85,16 +82,16 @@ class Interface
 
   def open_cards
     puts 'Ваши карты:'
-    @user.hand_cards.each { |card| print "|#{card}|  "}
+    @user.hand_cards.each { |card| print "|#{card}|  " }
     puts ' '
     puts 'Карты соперника:'
-    @diler.hand_cards.each { |card| print "|#{card}|  "}
+    @diler.hand_cards.each { |card| print "|#{card}|  " }
     puts ' '
     total_calculating
   end
-  
+
   def total_calculating
-    stake = Gamer.class_eval("@@stake")
+    # stake = Gamer.class_eval('@@stake')
 
     puts "Вы набрали #{@user.points} очков"
     puts "Соперник набрал #{@diler.points} очков"
@@ -123,7 +120,7 @@ class Interface
   end
 
   def continue
-    puts "Хотите продолжить игру? 1 - да, 2 - нет."
+    puts 'Хотите продолжить игру? 1 - да, 2 - нет.'
     choice = gets.chomp
     case choice
     when '1'
@@ -139,8 +136,8 @@ class Interface
   end
 
   def win
-    prize = Gamer.class_variable_get("@@stake")
-    Gamer.class_variable_set("@@stake", 0)
+    prize = Gamer.class_variable_get('@@stake')
+    Gamer.class_variable_set('@@stake', 0)
 
     @user.get_prize(prize)
 
@@ -148,8 +145,8 @@ class Interface
   end
 
   def loose
-    prize = Gamer.class_variable_get("@@stake")
-    Gamer.class_variable_set("@@stake", 0)
+    prize = Gamer.class_variable_get('@@stake')
+    Gamer.class_variable_set('@@stake', 0)
 
     @diler.get_prize(prize)
 
@@ -158,8 +155,8 @@ class Interface
   end
 
   def return_bets
-    @user.bank +=10
-    @diler.bank +=10
-    Gamer.class_variable_set("@@stake", 0)
+    @user.bank += 10
+    @diler.bank += 10
+    Gamer.class_variable_set('@@stake', 0)
   end
 end

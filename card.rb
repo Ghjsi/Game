@@ -3,7 +3,7 @@ class Card
 
   def initialize
     @deck = []
-    deck
+    deck_create
   end
 
   def give_card
@@ -12,9 +12,9 @@ class Card
   end
 
   private
-  
-  def deck
-    names = %w(K Q J A 2 3 4 5 6 7 8 9 10)
+
+  def deck_create
+    names = %w[K Q J A 2 3 4 5 6 7 8 9 10]
     suits = ["\u2665", "\u2666", "\u2663", "\u2660"]
     names.each do |name|
       @deck << "#{name} #{suits[0]}"

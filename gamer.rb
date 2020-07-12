@@ -1,10 +1,8 @@
 class Gamer
-
   @@stake = 0
 
-  attr_accessor :hand_cards
-
-  attr_reader :points, :bank
+  attr_accessor :hand_cards, :bank
+  # attr_reader :bank # :points,
 
   def initialize
     @bank = 100
@@ -32,7 +30,7 @@ class Gamer
   def points
     @points = 0
     @hand_cards.each do |card|
-      symbols = card.split(" ")
+      symbols = card.split(' ')
       suit = symbols[0]
 
       case suit
@@ -51,5 +49,4 @@ class Gamer
     end
     @points
   end
-
 end
