@@ -6,27 +6,29 @@ class Interface
     puts 'Enter your name:'
     @user_name = gets.chomp.capitalize
     puts "Hi, #{@user_name}"
-    start
-  end
-
-  def start
 
     @card = Card.new
     @user = User.new
     @diler = Diler.new
     distribute
-    game
+
+    start
+  end
+
+  def start
 
     @user.make_bet
     @diler.make_bet
     puts "Игроки сделали ставки по 10 долларов. В вашем банке #{@user.bank} долларов."
     puts "На кону #{Gamer.class_eval("@@stake")}"
+    game
   end
 
 
   def game
     loop do
-      open_cards if @user.hand_cards.size == 3 && @diler.hand_cards.size == 3
+
+      open_cards if full_hands?
 
       print 'Сумма Ваших очков:'
       puts "#{@user.points}"
@@ -50,6 +52,14 @@ class Interface
       else
         puts 'Неверный ввод.'
       end
+    end
+  end
+
+  def full_hands?
+    if @user.hand_cards.size >= 3 && @diler.hand_cards.size >= 3
+      true
+    else
+      false
     end
   end
 
@@ -79,7 +89,8 @@ class Interface
     @user.hand_cards.each { |card| print "|#{card}|  "}
     puts ' '
     puts 'Карты соперника:'
-    @diler.hand_cards.each { |card| print "|#{card}|  \n"}
+    @diler.hand_cards.each { |card| print "|#{card}|  "}
+    puts ' '
     total_calculating
   end
   
@@ -90,18 +101,48 @@ class Interface
     puts "Соперник набрал #{@diler.points} очков"
     if @user.points > @diler.points && @user.points <= 21
       puts 'Вы выиграли!'
+      win
 
     elsif @user.points < @diler.points && @diler.points <= 21
       puts 'Вы проиграли.'
+      loose
     elsif @user.points > 21
       puts 'Вы проиграли.'
+      loose
     elsif @diler.points > 21
       puts 'Вы выиграли!'
+      win
     else
       puts 'Ничья'
+      return_bets
     end
     puts '------new_round--------'
     # поделить кон
     start
+  end
+
+  def win
+    prize = Gamer.class_variable_get("@@stake")
+    Gamer.class_variable_set("@@stake", 0)
+
+    @user.get_prize(prize)
+
+    puts "В вашем банке #{@user.bank} долларов."
+  end
+
+  def loose
+    prize = Gamer.class_variable_get("@@stake")
+    Gamer.class_variable_set("@@stake", 0)
+
+    @diler.get_prize(prize)
+
+    puts "В банке соперника #{@diler.bank} долларов."
+    puts "В вашем банке #{@user.bank} долларов."
+  end
+
+  def return_bets
+    @user.bank +=10
+    @diler.bank +=10
+    Gamer.class_variable_set("@@stake", 0)
   end
 end

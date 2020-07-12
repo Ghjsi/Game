@@ -21,6 +21,10 @@ class Gamer
     end
   end
 
+  def get_prize(sum)
+    @bank += sum
+  end
+
   def skip_move
   end
 
