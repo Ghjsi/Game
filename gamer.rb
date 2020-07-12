@@ -1,6 +1,6 @@
 class Gamer
 
-  @@stake = 0 # на кону 0 долл
+  @@stake = 0
 
   attr_accessor :hand_cards
 
@@ -15,7 +15,7 @@ class Gamer
   def make_bet
     if @bank > 0
       @bank -= 10
-      @@stake +=10
+      @@stake += 10
     else
       puts 'Bank is empty'
     end
@@ -23,9 +23,6 @@ class Gamer
 
   def get_prize(sum)
     @bank += sum
-  end
-
-  def skip_move
   end
 
   def get_card(deck_name)

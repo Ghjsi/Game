@@ -5,18 +5,17 @@ class Interface
   def greetings
     puts 'Enter your name:'
     @user_name = gets.chomp.capitalize
-    puts "Hi, #{@user_name}"
+    puts "Привет, #{@user_name}!"
 
-    @card = Card.new
     @user = User.new
     @diler = Diler.new
-    distribute
-
+#distribute
     start
   end
 
   def start
-
+    @card = Card.new
+    distribute
     @user.make_bet
     @diler.make_bet
     puts "Игроки сделали ставки по 10 долларов. В вашем банке #{@user.bank} долларов."
@@ -117,8 +116,26 @@ class Interface
       return_bets
     end
     puts '------new_round--------'
-    # поделить кон
-    start
+
+    fold
+
+    continue
+  end
+
+  def continue
+    puts "Хотите продолжить игру? 1 - да, 2 - нет."
+    choice = gets.chomp
+    case choice
+    when '1'
+      start
+    when '2'
+      exit
+    end
+  end
+
+  def fold
+    @user.hand_cards = []
+    @diler.hand_cards = []
   end
 
   def win
