@@ -1,26 +1,10 @@
 class Gamer
-  @@stake = 0
-
-  attr_accessor :hand_cards, :bank
-  # attr_reader :bank # :points,
+  attr_accessor :bank, :hand_cards
 
   def initialize
     @bank = 100
     @hand_cards = []
     @points = 0
-  end
-
-  def make_bet
-    if @bank > 0
-      @bank -= 10
-      @@stake += 10
-    else
-      puts 'Bank is empty'
-    end
-  end
-
-  def get_prize(sum)
-    @bank += sum
   end
 
   def get_card(deck_name)
@@ -30,10 +14,8 @@ class Gamer
   def points
     @points = 0
     @hand_cards.each do |card|
-      symbols = card.split(' ')
-      suit = symbols[0]
-
-      case suit
+      card_name = card.name
+      case card_name
       when 'K'
         @points += 10
       when 'Q'
@@ -44,7 +26,7 @@ class Gamer
         @points += 1 if @points + 11 >= 21
         @points += 11 if @points + 11 < 21
       else
-        @points += suit.to_i
+        @points += card_name.to_i
       end
     end
     @points

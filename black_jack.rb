@@ -1,11 +1,18 @@
+require_relative 'play'
 require_relative 'gamer'
 require_relative 'user'
 require_relative 'diler'
 require_relative 'card'
+require_relative 'deck'
 require_relative 'interface'
 
-# rubocop:disable Style/GlobalVars
-$blackjack = Interface.new
+class BlackJack
+  def initialize
+    user = User.new
+    diler = Diler.new
+    play = Play.new(user, diler)
+    Interface.new(play)
+  end
+end
 
-$blackjack.greetings
-# rubocop:enable Style/GlobalVars
+BlackJack.new

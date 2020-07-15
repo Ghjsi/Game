@@ -7,9 +7,6 @@ Rails:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
-  
-Style/ClassVars:
-  Enabled: false
 
 Metrics/LineLength:
   Max: 100
