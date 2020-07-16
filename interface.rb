@@ -1,6 +1,8 @@
 class Interface
-  def initialize(play)
+  def initialize(user, diler, play)
     @play = play
+    @user = user
+    @diler = diler
 
     greetings
   end
@@ -15,7 +17,7 @@ class Interface
   def start
     @play.start
 
-    puts "Игроки сделали ставки по 10 долларов. В вашем банке #{@play.user.bank} долларов."
+    puts "Игроки сделали ставки по 10 долларов. В вашем банке #{@user.bank} долларов."
     puts "На кону #{@play.stake}"
 
     game
@@ -26,7 +28,7 @@ class Interface
       open_cards if @play.full_hands?
 
       print 'Сумма Ваших очков:'
-      puts @play.user.points
+      puts @user.points
       show_hand_cards
       puts "\n #{@user_name} - Ваш ход. Введите:"
       puts '1 - чтобы пропустить ход'
@@ -52,39 +54,39 @@ class Interface
 
   def show_hand_cards
     print 'Карты у вас в руке:'
-    @play.user.hand_cards.each { |card| print "|#{card.name} #{card.suit}|  " }
+    @user.hand_cards.each { |card| print "|#{card.name} #{card.suit}|  " }
     puts ' '
     print 'Карты в руке соперника:'
-    @play.diler.hand_cards.each { |_card| print '|**|  ' }
+    @diler.hand_cards.each { |_card| print '|**|  ' }
   end
 
   def open_cards
     puts 'Ваши карты:'
-    @play.user.hand_cards.each { |card| print "|#{card.name} #{card.suit}|  " }
+    @user.hand_cards.each { |card| print "|#{card.name} #{card.suit}|  " }
     puts ' '
     puts 'Карты соперника:'
-    @play.diler.hand_cards.each { |card| print "|#{card.name} #{card.suit}|  " }
+    @diler.hand_cards.each { |card| print "|#{card.name} #{card.suit}|  " }
     puts ' '
     total_calculating
   end
 
   def total_calculating
-    puts "Вы набрали #{@play.user.points} очков"
-    puts "Соперник набрал #{@play.diler.points} очков"
+    puts "Вы набрали #{@user.points} очков"
+    puts "Соперник набрал #{@diler.points} очков"
 
-    if @play.user.points > @play.diler.points && @play.user.points <= 21
+    if @user.points > @diler.points && @user.points <= 21
       puts 'Вы выиграли!'
       @play.win
 
-    elsif @play.user.points < @play.diler.points && @play.user.points <= 21
+    elsif @user.points < @diler.points && @user.points <= 21
       puts 'Вы проиграли.'
       @play.loose
 
-    elsif @play.diler.points > 21 && @play.user.points <= 21
+    elsif @diler.points > 21 && @user.points <= 21
       puts 'Вы выиграли!'
       @play.win
 
-    elsif @play.user.points > 21 && @play.diler.points < 21
+    elsif @user.points > 21 && @diler.points < 21
       puts 'Вы проиграли.'
       @play.loose
 

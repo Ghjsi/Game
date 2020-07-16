@@ -11,7 +11,7 @@ class BlackJack
     user = User.new
     diler = Diler.new
     play = Play.new(user, diler)
-    Interface.new(play)
+    Interface.new(user, diler, play) # (play)
   end
 end
 
