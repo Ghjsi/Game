@@ -7,8 +7,8 @@ class Deck
   end
 
   def deck_create
-    CARD_NAMES.each do |name|
-      CARD_SUITS.each do |suit|
+    Card::CARD_NAMES.each do |name|
+      Card::CARD_SUITS.each do |suit|
         @deck << Card.new(name, suit)
       end
     end
